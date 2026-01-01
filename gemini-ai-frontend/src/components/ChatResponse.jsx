@@ -6,18 +6,18 @@ const ChatResponse = ({ response }) => {
 
   // Helper to extract text from various possible response shapes
   const extractText = (candidate) => {
-      const parts = candidate?.content?.parts;
-      if (Array.isArray(parts) && parts.length) {
-        // join all text parts for robustness
-        return parts
-          .map((p) => typeof p === "string" ? p : p?.text)
-          .filter(Boolean)
-          .join("\n\n");
-      }
-      // Fallbacks for other API shapes
-      if (candidate?.content?.text) return candidate.content.text;
-      if (candidate?.output_text) return candidate.output_text;
-      return JSON.stringify(candidate);
+    const parts = candidate?.content?.parts;
+    if (Array.isArray(parts) && parts.length) {
+      // join all text parts for robustness
+      return parts
+        .map((p) => (typeof p === "string" ? p : p?.text))
+        .filter(Boolean)
+        .join("\n\n");
+    }
+    // Fallbacks for other API shapes
+    if (candidate?.content?.text) return candidate.content.text;
+    if (candidate?.output_text) return candidate.output_text;
+    return JSON.stringify(candidate);
   };
 
   const hasCandidates = candidates.length > 0;
@@ -43,14 +43,19 @@ const ChatResponse = ({ response }) => {
                 <>
                   <h6>Citations:</h6>
                   <ul>
-                    {candidate.citationMetadata.citationSources.map((source, idx) => (
-                      <li key={idx}>
-                        <a href={source.uri} target="_blank" rel="noopener noreferrer">
-                          {source.uri}
-                        </a>{" "}
-                        (Indexes: {source.startIndex} - {source.endIndex})
-                      </li>
-                    ))}
+                    {candidate.citationMetadata.citationSources.map(
+                      (source, idx) => (
+                        <li key={idx}>
+                          <a
+                            href={source.uri}
+                            target="_blank"
+                            rel="noopener noreferrer">
+                            {source.uri}
+                          </a>{" "}
+                          (Indexes: {source.startIndex} - {source.endIndex})
+                        </li>
+                      )
+                    )}
                   </ul>
                 </>
               ) : null}

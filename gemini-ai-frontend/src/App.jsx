@@ -18,7 +18,11 @@ function App() {
       const apiResponse = await fetchChatResponse(question);
       setResponse(apiResponse);
     } catch (error) {
-      setError(error?.response?.data?.message || error?.message || "Failed to get response");
+      setError(
+        error?.response?.data?.message ||
+          error?.message ||
+          "Failed to get response"
+      );
     } finally {
       setLoading(false);
     }
