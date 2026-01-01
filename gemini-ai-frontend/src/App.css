@@ -1,3 +1,136 @@
+/* Glassmorphism navbar (Apple-style) */
+.glass-nav {
+	position: relative;
+	overflow: visible; /* allow error toast to render below navbar */
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 100%);
+	backdrop-filter: blur(18px) saturate(180%);
+	-webkit-backdrop-filter: blur(18px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.glass-nav::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	/* glossy highlight */
+	background: radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 60%);
+}
+
+/* Optional subtle shimmer */
+@keyframes glassShimmer {
+	0% {
+		background-position: 0% 0%;
+	}
+	100% {
+		background-position: 100% 0%;
+	}
+}
+.glass-nav {
+	background-size: 200% 200%;
+	animation: glassShimmer 12s linear infinite;
+}
+
+/* Bottom-centered search area */
+.search-area {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+	width: 100%;
+	max-width: 640px;
+	padding-inline: 16px;
+	z-index: 10;
+}
+
+/* Glass input for search bar */
+.form-control.glass-input {
+	background: #303030; /* requested search bar color */
+	color: #fff;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.25);
+	line-height: 1.4;
+	text-align: left; /* keep left-aligned text */
+}
+
+.form-control.glass-input:focus {
+	background: #303030; /* keep same color on focus */
+	color: #fff;
+	box-shadow: none; /* prevent blue glow */
+	outline: none;
+	/* do not set border-color here to allow animation to continue */
+	caret-color: #fff;
+}
+
+.form-control.glass-input::placeholder {
+	color: rgba(255, 255, 255, 0.7);
+	text-align: left; /* left alignment */
+}
+
+/* Glass button with bluish primary tone (always visible) */
+.btn.glass-btn-primary {
+	/* Stronger bluish base so it shows even before interaction */
+	background: linear-gradient(135deg, rgba(13, 110, 253, 0.85) 0%, rgba(13, 110, 253, 0.75) 100%);
+	background-color: #0d6efd; /* fallback and ensure solid tone */
+	backdrop-filter: blur(12px) saturate(160%);
+	-webkit-backdrop-filter: blur(12px) saturate(160%);
+	border: 1px solid rgba(13, 110, 253, 0.9);
+	color: #fff;
+	box-shadow: 0 6px 20px rgba(13, 110, 253, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+	transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn.glass-btn-primary:hover,
+.btn.glass-btn-primary:focus,
+.btn.glass-btn-primary:active {
+	background: linear-gradient(135deg, rgba(13, 110, 253, 0.95) 0%, rgba(13, 110, 253, 0.85) 100%);
+	border-color: rgba(13, 110, 253, 1);
+	color: #fff;
+}
+
+.btn.glass-btn-primary:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+/* Global dark background */
+body,
+.App {
+	min-height: 100vh;
+	background-color: #000;
+	/* Subtle dotted grid pattern over black background */
+	background-image:
+		radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+		radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+	/* tighter spacing */
+	background-position: 0 0, 6px 6px;
+	background-size: 12px 12px;
+	background-attachment: fixed;
+}
+
+/* Optional: apply a subtle glass sheen over the dotted grid */
+.bg-dots-glass {
+	background-image:
+		/* soft sheen overlay */
+		linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 40%),
+		radial-gradient(rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+		radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+	background-position: 0 0, 0 0, 6px 6px;
+	background-size: 100% 100%, 12px 12px, 12px 12px;
+	background-attachment: fixed;
+}
+
+/* Ensure pill inputs stay perfectly rounded */
+.form-control.rounded-pill {
+	border-radius: 9999px;
+	background-color: #303030; /* update pill background to match */
+}
+
+/* Improve focus outline for accessibility */
+.form-control:focus {
+	box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
 /* Search bar aesthetics */
 .form-control.rounded-pill {
 	border-radius: 9999px;
@@ -6,4 +139,117 @@
 /* Improve focus outline for accessibility */
 .form-control:focus {
 	box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Footer styles */
+.app-footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(8px) saturate(150%);
+	-webkit-backdrop-filter: blur(8px) saturate(150%);
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	z-index: 5;
+}
+
+.footer-link {
+	color: rgba(255, 255, 255, 0.85);
+	text-decoration: none; /* do not show URL, just names */
+}
+
+.footer-link:hover {
+	color: #fff;
+}
+
+/* Error toast that slides from navbar bottom to 37px below */
+.error-toast {
+	position: absolute; /* relative to .glass-nav header */
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(100% + 37px); /* final resting position */
+	z-index: 20;
+	animation: toastSlideIn 300ms ease-out both;
+}
+
+/* Animated search border color cycle */
+@keyframes searchBorderCycle {
+	0%   { border-color: #67C4FF; }
+	20%  { border-color: #FFD301; }
+	40%  { border-color: #E91C12; }
+	60%  { border-color: #AEE938; }
+	80%  { border-color: #FF8C00; }
+	100% { border-color: #67C4FF; }
+}
+
+/* Match the search border cycle for title text color */
+@keyframes titleColorCycle {
+	0%   { color: #67C4FF; }
+	20%  { color: #FFD301; }
+	40%  { color: #E91C12; }
+	60%  { color: #AEE938; }
+	80%  { color: #FF8C00; }
+	100% { color: #67C4FF; }
+}
+
+.title-color-animated {
+	animation: titleColorCycle 6s ease-in-out infinite;
+}
+
+.form-control.glass-input.search-border-animated {
+	border-width: 2px; /* increase for better visibility */
+	border-style: solid;
+	animation: searchBorderCycle 6s ease-in-out infinite;
+}
+
+.error-toast-content {
+	min-width: 280px;
+	max-width: 520px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	color: #fff;
+	/* glassy red alert */
+	background: linear-gradient(135deg, rgba(220, 53, 69, 0.85) 0%, rgba(220, 53, 69, 0.7) 100%);
+	backdrop-filter: blur(12px) saturate(160%);
+	-webkit-backdrop-filter: blur(12px) saturate(160%);
+	border: 1px solid rgba(220, 53, 69, 0.9);
+	box-shadow: 0 8px 24px rgba(220, 53, 69, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Warning toast (orange) same animation, different styling */
+.warning-toast {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(100% + 37px);
+	z-index: 20;
+	animation: toastSlideIn 300ms ease-out both;
+}
+
+.warning-toast-content {
+	min-width: 280px;
+	max-width: 520px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	color: #fff;
+	/* glassy orange warning */
+	background: linear-gradient(135deg, rgba(253, 126, 20, 0.85) 0%, rgba(253, 126, 20, 0.7) 100%);
+	backdrop-filter: blur(12px) saturate(160%);
+	-webkit-backdrop-filter: blur(12px) saturate(160%);
+	border: 1px solid rgba(253, 126, 20, 0.9);
+	box-shadow: 0 8px 24px rgba(253, 126, 20, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+@keyframes toastSlideIn {
+	0% {
+		top: 100%; /* exactly at the navbar bottom */
+		opacity: 0;
+		transform: translateX(-50%) translateY(6px);
+	}
+	100% {
+		top: calc(100% + 37px);
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
 }

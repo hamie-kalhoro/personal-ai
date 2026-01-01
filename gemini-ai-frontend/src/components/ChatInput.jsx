@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ChatInput = ({ onSubmit }) => {
+const ChatInput = ({ onSubmit, onEmptySubmit }) => {
   const [question, setQuestion] = useState("");
 
   const handleSubmit = (e) => {
@@ -8,33 +8,42 @@ const ChatInput = ({ onSubmit }) => {
     if (question.trim()) {
       onSubmit(question);
       setQuestion("");
+    } else {
+      onEmptySubmit && onEmptySubmit();
     }
   };
 
   return (
-    <div className="container my-4">
+    <div className="search-area">
       <form onSubmit={handleSubmit}>
         {/* Label + search bar grouped to align perfectly */}
-        <div className="mb-3 mx-auto" style={{ maxWidth: 600 }}>
-          <label htmlFor="question" className="form-label mb-2">
+        <div className="mb-3 mx-auto" style={{ maxHeight: 50, maxWidth: 600 }}>
+          <label
+            htmlFor="question"
+            className="form-label mb-2 text-white text-center d-block">
             Ask a Question
           </label>
 
           <div className="position-relative">
-            <input
-              type="text"
-              className="form-control rounded-pill pe-5"
+            <textarea
+              className="form-control glass-input rounded-pill pe-5 search-border-animated"
               id="question"
               placeholder="Enter your question"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              style={{ paddingRight: "80px" }}
+              rows={2}
+              style={{
+                height: "45px",
+                paddingRight: "92px",
+                paddingLeft: "16px",
+                resize: "none",
+              }}
             />
 
             <button
               type="submit"
               aria-label="Search"
-              className="btn btn-primary rounded-pill position-absolute end-0 top-50 translate-middle-y me-1 d-flex align-items-center gap-1"
+              className="btn btn-primary glass-btn-primary rounded-pill position-absolute end-0 top-50 translate-middle-y me-1 d-flex align-items-center gap-1"
               style={{ height: 32, paddingInline: 10 }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
