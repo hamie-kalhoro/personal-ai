@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <header className="bg-primary text-white text-center py-4">
-        <h1>Gemini ChatBot</h1>
+        <h3>Hamidz Ai</h3>
       </header>
       <ChatInput onSubmit={handleQuestionSubmit} />
       {error && (
