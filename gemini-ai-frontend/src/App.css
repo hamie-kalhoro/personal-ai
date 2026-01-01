@@ -2,11 +2,39 @@
 .glass-nav {
 	position: relative;
 	overflow: visible; /* allow error toast to render below navbar */
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.1) 100%);
-	backdrop-filter: blur(18px) saturate(180%);
-	-webkit-backdrop-filter: blur(18px) saturate(180%);
-	border: 1px solid rgba(255, 255, 255, 0.18);
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Liquid glass navbar: lighter transparency and blended sheen to match dotted bg */
+.glass-nav-liquid {
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%),
+				linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 40%);
+	backdrop-filter: blur(22px) saturate(180%);
+	-webkit-backdrop-filter: blur(22px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+/* Logo icon helpers */
+.brand-icon {
+	width: 48px; /* a little bit larger */
+	height: 48px;
+	object-fit: contain;
+	border-radius: 6px;
+	display: inline-block;
+}
+
+.brand-icon-sm {
+	width: 34px; /* a little bit larger */
+	height: 34px;
+	object-fit: contain;
+	border-radius: 6px;
+	display: inline-block;
+}
+
+/* Larger font for the search label above the bar */
+.search-label {
+	font-size: 1.5rem; /* ~1.5x default */
+	font-weight: 600;
 }
 
 .glass-nav::before {
@@ -28,7 +56,7 @@
 		background-position: 100% 0%;
 	}
 }
-.glass-nav {
+.glass-nav-liquid {
 	background-size: 200% 200%;
 	animation: glassShimmer 12s linear infinite;
 }
@@ -82,6 +110,18 @@
 	transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Toggle button sizing to match navbar/search aesthetics */
+.btn.btn-toggle {
+	min-height: 40px;
+	padding: 8px 16px;
+	font-weight: 600;
+	line-height: 1;
+}
+.btn.btn-toggle svg {
+	width: 18px;
+	height: 18px;
+}
+
 .btn.glass-btn-primary:hover,
 .btn.glass-btn-primary:focus,
 .btn.glass-btn-primary:active {
@@ -107,6 +147,47 @@ body,
 	background-position: 0 0, 6px 6px;
 	background-size: 12px 12px;
 	background-attachment: fixed;
+}
+
+/* Light/Dark theme variants */
+.App.theme-light {
+	background-color: #f7f8fa;
+	background-image:
+		radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+		radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+	background-position: 0 0, 6px 6px;
+	background-size: 12px 12px;
+	background-attachment: fixed;
+	color: #111;
+}
+
+.App.theme-dark {
+	color: #fff;
+}
+
+/* Improve contrast for navbar text in light mode */
+.theme-light .glass-nav-liquid,
+.theme-light .glass-nav {
+	color: #111 !important;
+}
+
+/* Font stack similar to Codecademy: Inter with Graphik-like fallbacks */
+:root {
+	--font-sans: Inter, "Graphik", "Graphik Web", "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+	--font-heading: "Outfit", Inter, "Graphik", "Graphik Web", "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --current-color: #67C4FF; /* default animated color */
+}
+
+body, .App {
+	font-family: var(--font-sans);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+.code, code, pre, kbd, samp {
+	font-family: var(--font-mono);
 }
 
 /* Optional: apply a subtle glass sheen over the dotted grid */
@@ -173,34 +254,21 @@ body,
 	animation: toastSlideIn 300ms ease-out both;
 }
 
-/* Animated search border color cycle */
-@keyframes searchBorderCycle {
-	0%   { border-color: #67C4FF; }
-	20%  { border-color: #FFD301; }
-	40%  { border-color: #E91C12; }
-	60%  { border-color: #AEE938; }
-	80%  { border-color: #FF8C00; }
-	100% { border-color: #67C4FF; }
-}
-
-/* Match the search border cycle for title text color */
-@keyframes titleColorCycle {
-	0%   { color: #67C4FF; }
-	20%  { color: #FFD301; }
-	40%  { color: #E91C12; }
-	60%  { color: #AEE938; }
-	80%  { color: #FF8C00; }
-	100% { color: #67C4FF; }
-}
-
+/* Title color follows the current color set by JS */
 .title-color-animated {
-	animation: titleColorCycle 6s ease-in-out infinite;
+	color: var(--current-color);
+	transition: color 240ms ease-in-out;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	letter-spacing: 0.2px;
 }
 
+/* Search bar border follows the same current color */
 .form-control.glass-input.search-border-animated {
 	border-width: 2px; /* increase for better visibility */
 	border-style: solid;
-	animation: searchBorderCycle 6s ease-in-out infinite;
+	border-color: var(--current-color);
+	transition: border-color 240ms ease-in-out;
 }
 
 .error-toast-content {
