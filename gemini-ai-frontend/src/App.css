@@ -6,12 +6,15 @@
 
 /* Liquid glass navbar: lighter transparency and blended sheen to match dotted bg */
 .glass-nav-liquid {
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%),
-				linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 40%);
-	backdrop-filter: blur(22px) saturate(180%);
-	-webkit-backdrop-filter: blur(22px) saturate(180%);
-	border: 1px solid rgba(255, 255, 255, 0.14);
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+	/* ultra-subtle overlay so it feels present but not obvious */
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 40%);
+	backdrop-filter: blur(30px) saturate(160%);
+	-webkit-backdrop-filter: blur(30px) saturate(160%);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+	border-radius: 16px; /* slightly rounded edges */
 }
 
 /* Logo icon helpers */
@@ -37,6 +40,13 @@
 	font-weight: 600;
 }
 
+/* Slightly smaller title inside the search label */
+.search-label .search-label-title {
+	font-size: 1rem;
+	font-weight: 600;
+	color: #3c5f7b;
+}
+
 .glass-nav::before {
 	content: "";
 	position: absolute;
@@ -44,7 +54,7 @@
 	border-radius: inherit;
 	pointer-events: none;
 	/* glossy highlight */
-	background: radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 60%);
+	background: radial-gradient(120% 80% at 0% 0%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 60%);
 }
 
 /* Optional subtle shimmer */
@@ -61,12 +71,17 @@
 	animation: glassShimmer 12s linear infinite;
 }
 
+/* ensure rounded corners win over Bootstrap's rounded-5 */
+.glass-nav.glass-nav-liquid.rounded-5 {
+	border-radius: 16px;
+}
+
 /* Bottom-centered search area */
 .search-area {
 	position: fixed;
 	left: 50%;
 	transform: translateX(-50%);
-	bottom: calc(env(safe-area-inset-bottom, 0px) + 90px);
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 53.5px);
 	width: 100%;
 	max-width: 640px;
 	padding-inline: 16px;
@@ -75,7 +90,7 @@
 
 /* Glass input for search bar */
 .form-control.glass-input {
-	background: #303030; /* requested search bar color */
+	background: #181818; /* requested search bar color */
 	color: #fff;
 	border: 1px solid rgba(255, 255, 255, 0.22);
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -84,7 +99,7 @@
 }
 
 .form-control.glass-input:focus {
-	background: #303030; /* keep same color on focus */
+	background: #181818; /* keep same color on focus */
 	color: #fff;
 	box-shadow: none; /* prevent blue glow */
 	outline: none;
@@ -112,10 +127,11 @@
 
 /* Toggle button sizing to match navbar/search aesthetics */
 .btn.btn-toggle {
-	min-height: 40px;
-	padding: 8px 16px;
+	min-height: 35px;
+	padding: 4px 16px;
 	font-weight: 600;
 	line-height: 1;
+	margin-right: -20px;
 }
 .btn.btn-toggle svg {
 	width: 18px;
@@ -151,7 +167,7 @@ body,
 
 /* Light/Dark theme variants */
 .App.theme-light {
-	background-color: #f7f8fa;
+	background-color: #FFF0E5; /* updated light background, keep dotted overlay */
 	background-image:
 		radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
 		radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
@@ -166,17 +182,44 @@ body,
 }
 
 /* Improve contrast for navbar text in light mode */
-.theme-light .glass-nav-liquid,
 .theme-light .glass-nav {
 	color: #111 !important;
+}
+.theme-light .glass-nav-liquid {
+	/* light mode: black nav with tiny square grid that connects dots */
+	color: #fff !important;
+	background-color: #000;
+	background-image:
+		/* diagonal grid lines at 45° and 135° to tilt squares */
+		repeating-linear-gradient(
+			45deg,
+			rgba(255, 255, 255, 0.12) 0,
+			rgba(255, 255, 255, 0.12) 1px,
+			transparent 1px,
+			transparent var(--grid-spacing)
+		),
+		repeating-linear-gradient(
+			135deg,
+			rgba(255, 255, 255, 0.12) 0,
+			rgba(255, 255, 255, 0.12) 1px,
+			transparent 1px,
+			transparent var(--grid-spacing)
+		);
+	background-blend-mode: normal;
+	background-size: auto; /* lines repeat via repeating-linear-gradient */
+	/* keep glass effect but let the grid be visible */
+	backdrop-filter: blur(24px) saturate(170%);
+	-webkit-backdrop-filter: blur(24px) saturate(170%);
+	border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 /* Font stack similar to Codecademy: Inter with Graphik-like fallbacks */
 :root {
 	--font-sans: Inter, "Graphik", "Graphik Web", "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
-	--font-heading: "Outfit", Inter, "Graphik", "Graphik Web", "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+	--font-heading: "Atkinson Hyperlegible Mono", "Outfit", Inter, "Graphik", "Graphik Web", "Segoe UI", "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
 	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --current-color: #67C4FF; /* default animated color */
+	--current-color: #67C4FF; /* default animated color */
+	--grid-spacing: 6px; /* closer, smaller squares */
 }
 
 body, .App {
@@ -188,6 +231,34 @@ body, .App {
 
 .code, code, pre, kbd, samp {
 	font-family: var(--font-mono);
+}
+
+/* Helper tag: centered, 35% from top at 16px */
+.help-tag {
+	position: fixed;
+	top: 25%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 24px;
+	font-weight: 600;
+	z-index: 6; /* above footer, below search bar */
+}
+.App.theme-dark .help-tag { color: rgba(255, 255, 255, 0.9); }
+.App.theme-light .help-tag { color: rgba(17, 17, 17, 0.9); }
+
+/* Blinking question mark for help tag */
+.help-tag-qmark {
+	display: inline-block;
+	margin-left: 2px;
+	animation: helpTagBlink 1s steps(2, jump-none) infinite;
+}
+@keyframes helpTagBlink {
+	0%, 49% { opacity: 1; }
+	50%, 100% { opacity: 0; }
+}
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.help-tag-qmark { animation: none; }
 }
 
 /* Optional: apply a subtle glass sheen over the dotted grid */
@@ -205,7 +276,7 @@ body, .App {
 /* Ensure pill inputs stay perfectly rounded */
 .form-control.rounded-pill {
 	border-radius: 9999px;
-	background-color: #303030; /* update pill background to match */
+	background-color: #181818; /* update pill background to match */
 }
 
 /* Improve focus outline for accessibility */
@@ -295,6 +366,25 @@ body, .App {
 	animation: toastSlideIn 300ms ease-out both;
 }
 
+/* Fall-out animation when dismissing the warning toast */
+.warning-toast.fall-out,
+.error-toast.fall-out {
+	animation: toastFallOut 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes toastFallOut {
+	0% {
+		top: calc(100% + 37px);
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+	100% {
+		top: calc(100% + 37px + 140px);
+		opacity: 0;
+		transform: translateX(-50%) translateY(140px);
+	}
+}
+
 .warning-toast-content {
 	min-width: 280px;
 	max-width: 520px;
@@ -321,3 +411,216 @@ body, .App {
 		transform: translateX(-50%) translateY(0);
 	}
 }
+
+/* Chat response fall-out animation (applies to ChatResponse wrapper) */
+.chat-response.fall-out {
+	will-change: transform, opacity;
+	animation: chatResponseFallOut 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+/* Centered response section spanning between navbar and search bar */
+.response-section {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(92vw, 900px); /* slightly smaller than previous container */
+	padding: 10px 14px;
+	overflow: auto;
+	border-radius: 16px; /* curve the scroll container corners */
+}
+
+.response-title {
+	margin: 6px 0 12px;
+}
+
+.usage-metadata {
+	margin-top: 10px;
+}
+
+/* Inline error tag removed to avoid duplicate with navbar toast */
+
+/* Loading tag placed just below the navbar */
+.loading-tag {
+	position: absolute; /* relative to .glass-nav header */
+	left: 50%;
+	transform: translateX(-50%);
+	top: calc(100% + 6px);
+	z-index: 20;
+	padding: 8px 12px;
+	border-radius: 12px;
+	color: #fff;
+	background: linear-gradient(135deg, rgba(102, 153, 255, 0.85) 0%, rgba(102, 153, 255, 0.7) 100%);
+	backdrop-filter: blur(12px) saturate(160%);
+	-webkit-backdrop-filter: blur(12px) saturate(160%);
+	border: 1px solid rgba(102, 153, 255, 0.9);
+	box-shadow: 0 8px 24px rgba(102, 153, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Liquid glass response cards with clear text */
+.App.theme-dark .response-section .card {
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%),
+		rgba(18, 18, 18, 0.55);
+	backdrop-filter: blur(18px) saturate(160%);
+	-webkit-backdrop-filter: blur(18px) saturate(160%);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	border-radius: 14px;
+}
+.App.theme-dark .response-section .card-title,
+.App.theme-dark .response-section .card-text,
+.App.theme-dark .response-section .card-body,
+.App.theme-dark .response-section .response-title,
+.App.theme-dark .response-section .usage-metadata {
+	color: #fff;
+}
+
+.App.theme-light .response-section .card {
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.36) 100%),
+		rgba(255, 255, 255, 0.70);
+	backdrop-filter: blur(16px) saturate(150%);
+	-webkit-backdrop-filter: blur(16px) saturate(150%);
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+	border-radius: 14px;
+}
+.App.theme-light .response-section .card-title,
+.App.theme-light .response-section .card-text,
+.App.theme-light .response-section .card-body,
+.App.theme-light .response-section .response-title,
+.App.theme-light .response-section .usage-metadata {
+	color: #111;
+}
+@keyframes chatResponseFallOut {
+	0% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(140px);
+	}
+}
+
+/* Liquid glass scrollbars (theme-aware) */
+:root {
+	--scrollbar-size: 12px;
+	--scrollbar-radius: 10px;
+}
+
+/* Firefox base (thin + colored) */
+.App.theme-dark * {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+.App.theme-light * {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+}
+
+/* WebKit scrollbars */
+.App.theme-dark *::-webkit-scrollbar,
+.App.theme-light *::-webkit-scrollbar {
+	width: var(--scrollbar-size);
+	height: var(--scrollbar-size);
+}
+
+/* Track: subtle translucent glass pane */
+.App.theme-dark *::-webkit-scrollbar-track {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+	border-radius: var(--scrollbar-radius);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
+}
+.App.theme-light *::-webkit-scrollbar-track {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.03));
+	border-radius: var(--scrollbar-radius);
+	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Thumb: liquid glass with inner glow and soft edge */
+.App.theme-dark *::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.22));
+	border: 2px solid rgba(255, 255, 255, 0.18);
+	border-radius: 999px; /* pill shape */
+	box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.35), 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+.App.theme-light *::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
+	border: 2px solid rgba(0, 0, 0, 0.10);
+	border-radius: 999px; /* pill shape */
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.App.theme-dark *::-webkit-scrollbar-corner,
+.App.theme-light *::-webkit-scrollbar-corner {
+	background: transparent; /* blend corner for overlay scrollbars */
+	border-radius: var(--scrollbar-radius);
+}
+
+/* Page (html/body) scrollbars themed via root class */
+html.theme-dark {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+html.theme-light {
+	scrollbar-width: thin;
+	scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+}
+
+html.theme-dark::-webkit-scrollbar,
+html.theme-light::-webkit-scrollbar {
+	width: var(--scrollbar-size);
+	height: var(--scrollbar-size);
+}
+html.theme-dark::-webkit-scrollbar-track {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+	border-radius: var(--scrollbar-radius);
+	box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.35);
+}
+html.theme-light::-webkit-scrollbar-track {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.03));
+	border-radius: var(--scrollbar-radius);
+	box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.12);
+}
+html.theme-dark::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.22));
+	border: 2px solid rgba(255, 255, 255, 0.18);
+	border-radius: 999px;
+	box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.35), 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+html.theme-light::-webkit-scrollbar-thumb {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.55));
+	border: 2px solid rgba(0, 0, 0, 0.10);
+	border-radius: 999px;
+	box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+html.theme-dark::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.30));
+	border-color: rgba(255, 255, 255, 0.22);
+}
+html.theme-dark::-webkit-scrollbar-thumb:active {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.36));
+}
+html.theme-light::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.62));
+	border-color: rgba(0, 0, 0, 0.14);
+}
+html.theme-light::-webkit-scrollbar-thumb:active {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.70));
+}
+
+/* Hover/active states for tactile feel */
+.App.theme-dark *::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.30));
+	border-color: rgba(255, 255, 255, 0.22);
+}
+.App.theme-dark *::-webkit-scrollbar-thumb:active {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.36));
+}
+.App.theme-light *::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.62));
+	border-color: rgba(0, 0, 0, 0.14);
+}
+.App.theme-light *::-webkit-scrollbar-thumb:active {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.70));
+}
+

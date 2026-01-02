@@ -17,7 +17,7 @@ const ChatInput = ({ onSubmit, onEmptySubmit }) => {
     <div className="search-area">
       <form onSubmit={handleSubmit}>
         {/* Label + search bar grouped to align perfectly */}
-        <div className="mb-3 mx-auto" style={{ maxHeight: 80, maxWidth: 600 }}>
+        <div className="mb-0 mx-auto" style={{ maxHeight: 80, maxWidth: 600 }}>
           <label
             htmlFor="question"
             className="form-label mb-2 text-white d-flex align-items-center justify-content-center gap-2 search-label">
@@ -26,7 +26,7 @@ const ChatInput = ({ onSubmit, onEmptySubmit }) => {
               alt="App logo"
               className="brand-icon-sm"
             />
-            <span>How can I help you?</span>
+            <span className="search-label-title">Leather Style</span>
           </label>
 
           <div className="position-relative">
@@ -61,7 +61,7 @@ const ChatInput = ({ onSubmit, onEmptySubmit }) => {
                 strokeLinecap="round"
                 strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="163.65"></line>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
               <span>Search</span>
             </button>

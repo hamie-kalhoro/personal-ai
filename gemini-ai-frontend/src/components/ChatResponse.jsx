@@ -1,4 +1,4 @@
-const ChatResponse = ({ response }) => {
+const ChatResponse = ({ response, dismissing = false }) => {
   if (!response) return null;
 
   const candidates = response?.candidates || [];
@@ -8,13 +8,11 @@ const ChatResponse = ({ response }) => {
   const extractText = (candidate) => {
     const parts = candidate?.content?.parts;
     if (Array.isArray(parts) && parts.length) {
-      // join all text parts for robustness
       return parts
         .map((p) => (typeof p === "string" ? p : p?.text))
         .filter(Boolean)
         .join("\n\n");
     }
-    // Fallbacks for other API shapes
     if (candidate?.content?.text) return candidate.content.text;
     if (candidate?.output_text) return candidate.output_text;
     return JSON.stringify(candidate);
@@ -27,8 +25,10 @@ const ChatResponse = ({ response }) => {
     (typeof response?.content === "string" ? response.content : null);
 
   return (
-    <div className="container my-4">
-      <h3>Response</h3>
+    <div className={`chat-response ${dismissing ? "fall-out" : ""}`}>
+      <h3 className="response-title">Response</h3>
+
+      {/* Inline error removed to avoid duplicate with navbar toast */}
 
       {hasCandidates ? (
         candidates.map((candidate, index) => (
@@ -73,12 +73,12 @@ const ChatResponse = ({ response }) => {
       )}
 
       {usage ? (
-        <>
+        <div className="usage-metadata">
           <h4>Usage Metadata</h4>
           <p>Prompt Tokens: {usage?.promptTokenCount}</p>
           <p>Response Tokens: {usage?.candidatesTokenCount}</p>
           <p>Total Tokens: {usage?.totalTokenCount}</p>
-        </>
+        </div>
       ) : null}
     </div>
   );
