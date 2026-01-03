@@ -77,7 +77,7 @@ const Footer = () => {
 
   return (
     <footer className="app-footer text-center text-white py-0">
-      <div className="container-fluid position-relative">
+      <div className="container-fluid footer-grid">
         <div className="footer-center-group d-flex justify-content-center gap-2 flex-wrap">
           {links.map((l) => (
             <a
@@ -92,7 +92,7 @@ const Footer = () => {
           ))}
         </div>
         <span
-          className="footer-pill footer-pill-static position-absolute end-0 bottom-0 me-2 mb-.7"
+          className="footer-pill footer-pill-static"
           aria-label="Copyright notice">
           © 2026 Hamid Ali. All rights reserved
         </span>
