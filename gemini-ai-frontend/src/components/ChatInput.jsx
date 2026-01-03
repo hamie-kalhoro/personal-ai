@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ChatInput = ({ onSubmit, onEmptySubmit }) => {
+const ChatInput = ({ onSubmit, onEmptySubmit, loading = false }) => {
   const [question, setQuestion] = useState("");
 
   const handleSubmit = (e) => {
@@ -33,7 +33,7 @@ const ChatInput = ({ onSubmit, onEmptySubmit }) => {
             <textarea
               className="form-control glass-input rounded-pill pe-5 search-border-animated"
               id="question"
-              placeholder="Enter your question"
+              placeholder="Ask any question..."
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               rows={2}
@@ -48,22 +48,44 @@ const ChatInput = ({ onSubmit, onEmptySubmit }) => {
             <button
               type="submit"
               aria-label="Search"
-              className="btn btn-primary glass-btn-primary rounded-pill position-absolute end-0 top-50 translate-middle-y me-1 d-flex align-items-center gap-1"
-              style={{ height: 32, paddingInline: 10 }}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <span>Search</span>
+              className={`btn btn-primary glass-btn-primary rounded-pill position-absolute end-0 top-50 translate-middle-y me-2 d-flex align-items-center gap-1 ${
+                loading ? "is-loading" : ""
+              }`}
+              style={{ height: 32, paddingInline: 10 }}
+              disabled={loading}>
+              {loading ? (
+                <span className="glass-spinner-bars" aria-hidden="true">
+                  {[...Array(12)].map((_, i) => (
+                    <span
+                      className="seg"
+                      key={i}
+                      style={{
+                        transform: `translate(-50%, -50%) rotate(${
+                          i * 30
+                        }deg) translateY(-7px)`,
+                        animationDelay: `${i * 0.09}s`,
+                      }}
+                    />
+                  ))}
+                </span>
+              ) : (
+                <>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <span>Search</span>
+                </>
+              )}
             </button>
           </div>
         </div>

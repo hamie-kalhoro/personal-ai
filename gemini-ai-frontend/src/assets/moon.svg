@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <style>
+    <![CDATA[
+      @keyframes twinkle { 0% {opacity: .8} 50% {opacity: .2} 100% {opacity: .8} }
+      .star { animation: twinkle 2.2s ease-in-out infinite; }
+      .star:nth-child(2) { animation-delay: .4s; }
+      .star:nth-child(3) { animation-delay: .9s; }
+    ]]>
+  </style>
+  <defs>
+    <radialGradient id="moonFill" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#B0C4FF"/>
+      <stop offset="70%" stop-color="#7DA2FF"/>
+      <stop offset="100%" stop-color="#4C7BFF"/>
+    </radialGradient>
+    <linearGradient id="moonStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A5B8FF"/>
+      <stop offset="100%" stop-color="#3D6BFF"/>
+    </linearGradient>
+    <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Crescent moon with gentle glow -->
+  <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" fill="url(#moonFill)" stroke="url(#moonStroke)" stroke-width="2" filter="url(#moonGlow)"/>
+  <!-- Twinkling stars -->
+  <g fill="#FFFFFF">
+    <circle class="star" cx="6" cy="6" r="1"/>
+    <circle class="star" cx="8.5" cy="4.5" r="0.8"/>
+    <circle class="star" cx="5" cy="9" r="0.7"/>
+  </g>
+</svg>

@@ -7,14 +7,15 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="app-footer text-center text-white py-2">
-      <div className="container d-flex justify-content-center gap-3 flex-wrap">
+    <footer className="app-footer text-center text-white py-0">
+      <div className="container d-flex justify-content-center gap-2 flex-wrap">
         {links.map((l) => (
           <a
             key={l.name}
             href={l.url}
-            className="footer-link"
-            rel="noopener noreferrer">
+            className="footer-pill"
+            rel="noopener noreferrer"
+            aria-label={`Visit ${l.name}`}>
             {l.name}
           </a>
         ))}
