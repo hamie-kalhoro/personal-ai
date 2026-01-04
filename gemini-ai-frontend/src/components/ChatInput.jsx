@@ -22,7 +22,7 @@ const ChatInput = ({ onSubmit, onEmptySubmit, loading = false }) => {
             htmlFor="question"
             className="form-label mb-2 text-white d-flex align-items-center justify-content-center gap-2 search-label">
             <img
-              src="/original_logo.png"
+              src="/image_1767304984563_o2rzzi.png"
               alt="App logo"
               className="brand-icon-sm"
             />
