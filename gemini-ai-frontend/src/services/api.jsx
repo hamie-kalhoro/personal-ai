@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // Backend API base URL
-const API_URL = "https://gemini-ai-production-d106.up.railway.app/api/gemini/ask";
+const API_URL =
+  "https://gemini-ai-production-d106.up.railway.app/api/gemini/ask";
 
 export const fetchChatResponse = async (question) => {
   try {
