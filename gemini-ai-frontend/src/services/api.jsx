@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Use a relative path so Vite dev proxy can forward to backend
-const API_URL = "/api/gemini/ask";
+// Backend API base URL
+const API_URL = "https://gemini-ai-production-d106.up.railway.app/api/gemini/ask";
 
 export const fetchChatResponse = async (question) => {
   try {

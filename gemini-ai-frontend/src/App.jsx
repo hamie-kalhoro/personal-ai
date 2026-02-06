@@ -172,7 +172,7 @@ function App() {
             className="m-0 title-color-animated d-flex align-items-center gap-2"
             style={{ paddingTop: "0", marginTop: "0" }}>
             <img
-              src="/image_1767304984563_o2rzzi.png"
+              src="/shark_image_updated.png"
               alt="App logo"
               className="brand-icon"
             />
