@@ -120,7 +120,7 @@ This project is available as open source.
 
 ## **Author**
 
-**Hamie Kalhoro**  
+**Hamie Ali**  
 GitHub: [@hamie-kalhoro](https://github.com/hamie-kalhoro)
 
 ---
