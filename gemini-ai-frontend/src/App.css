@@ -707,6 +707,45 @@ body, .App {
 .App.theme-light .response-section .usage-metadata {
 	color: #111;
 }
+
+/* Rendered markdown styles in response cards */
+.response-markdown-heading {
+	margin: 0.9rem 0 0.45rem;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.response-markdown-paragraph {
+	margin: 0 0 0.7rem;
+	line-height: 1.6;
+}
+
+.response-markdown-list {
+	margin: 0 0 0.8rem;
+	padding-left: 1.35rem;
+}
+
+.response-markdown-list li {
+	margin-bottom: 0.35rem;
+}
+
+.response-markdown-code {
+	margin: 0.6rem 0 0.9rem;
+	padding: 0.75rem 0.9rem;
+	border-radius: 10px;
+	overflow-x: auto;
+	font-size: 0.95rem;
+}
+
+.App.theme-dark .response-markdown-code {
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.App.theme-light .response-markdown-code {
+	background: rgba(0, 0, 0, 0.06);
+	border: 1px solid rgba(0, 0, 0, 0.12);
+}
 @keyframes chatResponseFallOut {
 	0% {
 		opacity: 1;
